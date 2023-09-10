@@ -1,5 +1,5 @@
 import PlusIcon from "../icons/PlusIcon";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Column, Id, Task } from "../types";
 import ColumnContainer from "./ColumnContainer";
 import {
@@ -101,14 +101,30 @@ const defaultTasks: Task[] = [
 ];
 
 function KanbanBoard() {
-  const [columns, setColumns] = useState<Column[]>(defaultCols);
+  const savedColumns = localStorage.getItem('kanbanColumns');
+  const savedTasks = localStorage.getItem('kanbanTasks');
+
+  const initialColumns = savedColumns ? JSON.parse(savedColumns) : defaultCols;
+  const initialTasks = savedTasks ? JSON.parse(savedTasks) : defaultTasks;
+
+
+
+
+  const [columns, setColumns] = useState<Column[]>(initialColumns);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
-  const [tasks, setTasks] = useState<Task[]>(defaultTasks);
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
 
   const [activeTask, setActiveTask] = useState<Task | null>(null);
+
+  // 2. Efecto secundario para guardar en localStorage
+  useEffect(() => {
+    localStorage.setItem('kanbanColumns', JSON.stringify(columns));
+    localStorage.setItem('kanbanTasks', JSON.stringify(tasks));
+  }, [columns, tasks]);
+
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
