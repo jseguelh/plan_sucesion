@@ -17,9 +17,11 @@ import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
 
 const defaultCols: Column[] = [
+  
   {
     id: "gop",
     title: "Gerencia de Operaciones",
+
   },
   {
     id: "sip",
@@ -53,20 +55,49 @@ const defaultTasks: Task[] = [
     columnId: "sip",
     content: "Persona X",
   },
+  {
+    id: "static",
+    columnId:"Gerente General",
+    content: "Persona X",
+  },
   
 ];
 
+const staticColumn: Column = {
+  id: "static",
+  title: "Gerencia General",
+};
+
+const staticColumnBottom: Column = {
+  id: "staticBottom",
+  title: "Profesionales",
+};
+
+const defaultTasksBottom: Task[] = [
+  {
+    id: "staticTask1",
+    columnId: "staticBottom",
+    content: "Nombre por defecto 1",
+  },
+  {
+    id: "staticTask2",
+    columnId: "staticBottom",
+    content: "Nombre por defecto 2",
+  },
+];
+
 function KanbanBoard() {
+
+  
   const savedColumns = localStorage.getItem('kanbanColumns');
   const savedTasks = localStorage.getItem('kanbanTasks');
 
   const initialColumns = savedColumns ? JSON.parse(savedColumns) : defaultCols;
-  const initialTasks = savedTasks ? JSON.parse(savedTasks) : defaultTasks;
-
-
-
+  const initialTasks = savedTasks ? JSON.parse(savedTasks) : [defaultTasks, defaultTasksBottom]
 
   const [columns, setColumns] = useState<Column[]>(initialColumns);
+
+  
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
@@ -91,66 +122,85 @@ function KanbanBoard() {
   );
 
   return (
-    <div
-      className="
-        m-auto
-        flex
-        min-h-screen
-        w-full
-        items-center
-        overflow-x-auto
-        overflow-y-hidden
-        px-[40px]
-    "
-    >
+    <div className="justify-center">
+            {/* Aquí el encabezado estático */}
+      <div className="mb-4 flex justify-center h-[200px] overflow-hidden">
+        <ColumnContainer
+          key={staticColumn.id}
+          column={staticColumn}
+          updateColumn={updateColumn}
+          createTask={createTask}
+          deleteTask={deleteTask}
+          updateTask={updateTask}
+          tasks={tasks.filter((task) => task.columnId === staticColumn.id)}
+          deleteColumn={function (id: Id): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
+      </div>
+  
+      {/* Las demás columnas dispuestas horizontalmente */}
       <DndContext
         sensors={sensors}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
       >
-        <div className="m-auto flex gap-4">
-          <div className="flex gap-4">
-            <SortableContext items={columnsId}>
-              {columns.map((col) => (
-                <ColumnContainer
-                  key={col.id}
-                  column={col}
-                  deleteColumn={deleteColumn}
-                  updateColumn={updateColumn}
-                  createTask={createTask}
-                  deleteTask={deleteTask}
-                  updateTask={updateTask}
-                  tasks={tasks.filter((task) => task.columnId === col.id)}
-                />
-              ))}
-            </SortableContext>
-          </div>
+        <div className="flex gap-4 overflow-x-auto justify-center">
+          
+          <SortableContext items={columnsId}>
+            {columns.map((col) => (
+              <ColumnContainer
+                key={col.id}
+                column={col}
+                deleteColumn={deleteColumn}
+                updateColumn={updateColumn}
+                createTask={createTask}
+                deleteTask={deleteTask}
+                updateTask={updateTask}
+                tasks={tasks.filter((task) => task.columnId === col.id)}
+              />
+            ))}
+          </SortableContext>
           <button
             onClick={() => {
               createNewColumn();
             }}
             className="
-      h-[60px]
-      w-[350px]
-      min-w-[350px]
-      cursor-pointer
-      rounded-lg
-      bg-mainBackgroundColor
-      border-2
-      border-columnBackgroundColor
-      p-4
-      ring-rose-500
-      hover:ring-2
-      flex
-      gap-2
-      "
+              h-[60px]
+              w-[350px]
+              min-w-[350px]
+              cursor-pointer
+              rounded-lg
+              bg-mainBackgroundColor
+              border-2
+              border-columnBackgroundColor
+              p-4
+              ring-rose-500
+              hover:ring-2
+              flex
+              gap-2
+            "
           >
             <PlusIcon />
             Añadir organización
           </button>
         </div>
 
+        <div className="mt-4 flex justify-center">
+                <ColumnContainer
+                  key={staticColumnBottom.id}
+                  column={staticColumnBottom}
+                  updateColumn={updateColumn}
+                  createTask={createTask}
+                  deleteTask={deleteTask}
+                  updateTask={updateTask}
+                  tasks={tasks.filter((task) => task.columnId === staticColumnBottom.id)}
+                  deleteColumn={(id: Id) => {
+                    // No hacer nada ya que es estática
+                  }}
+                  />
+                </div>
         {createPortal(
           <DragOverlay>
             {activeColumn && (
@@ -179,6 +229,8 @@ function KanbanBoard() {
       </DndContext>
     </div>
   );
+  
+ 
 
   function createTask(columnId: Id) {
     const newTask: Task = {

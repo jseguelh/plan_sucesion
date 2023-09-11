@@ -69,7 +69,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
         "
           value={task.content}
           autoFocus
-          placeholder="Task content here"
+          placeholder="Escriba aquí"
           onBlur={toggleEditMode}
           onKeyDown={(e) => {
             if (e.key === "Enter" && e.shiftKey) {
