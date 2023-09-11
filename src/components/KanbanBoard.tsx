@@ -18,86 +18,42 @@ import TaskCard from "./TaskCard";
 
 const defaultCols: Column[] = [
   {
-    id: "todo",
-    title: "Todo",
+    id: "gop",
+    title: "Gerencia de Operaciones",
   },
   {
-    id: "doing",
-    title: "Work in progress",
+    id: "sip",
+    title: "Superintendencia de Procesos",
   },
   {
-    id: "done",
-    title: "Done",
+    id: "sim",
+    title: "Superintendencia de Molienda",
   },
 ];
 
 const defaultTasks: Task[] = [
   {
     id: "1",
-    columnId: "todo",
-    content: "List admin APIs for dashboard",
+    columnId: "gop",
+    content: "Pedro Muñoz \n Ingeniero",
   },
   {
     id: "2",
-    columnId: "todo",
+    columnId: "gop",
     content:
-      "Develop user registration functionality with OTP delivered on SMS after email confirmation and phone number confirmation",
+      "Juan Castillo /n Gerente",
   },
   {
     id: "3",
-    columnId: "doing",
-    content: "Conduct security testing",
+    columnId: "sip",
+    content: "Sofia Vergara ",
   },
   {
     id: "4",
-    columnId: "doing",
-    content: "Analyze competitors",
+    columnId: "sip",
+    content: "Persona X",
   },
-  {
-    id: "5",
-    columnId: "done",
-    content: "Create UI kit documentation",
-  },
-  {
-    id: "6",
-    columnId: "done",
-    content: "Dev meeting",
-  },
-  {
-    id: "7",
-    columnId: "done",
-    content: "Deliver dashboard prototype",
-  },
-  {
-    id: "8",
-    columnId: "todo",
-    content: "Optimize application performance",
-  },
-  {
-    id: "9",
-    columnId: "todo",
-    content: "Implement data validation",
-  },
-  {
-    id: "10",
-    columnId: "todo",
-    content: "Design database schema",
-  },
-  {
-    id: "11",
-    columnId: "todo",
-    content: "Integrate SSL web certificates into workflow",
-  },
-  {
-    id: "12",
-    columnId: "doing",
-    content: "Implement error logging and monitoring",
-  },
-  {
-    id: "13",
-    columnId: "doing",
-    content: "Design and implement responsive UI",
-  },
+  
 ];
 
 function KanbanBoard() {
