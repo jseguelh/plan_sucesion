@@ -133,7 +133,7 @@ function KanbanBoard() {
           deleteTask={deleteTask}
           updateTask={updateTask}
           tasks={tasks.filter((task) => task.columnId === staticColumn.id)}
-          deleteColumn={function (id: Id): void {
+          deleteColumn={function (_id: Id): void {
             throw new Error("Function not implemented.");
           }}
         />
@@ -196,7 +196,7 @@ function KanbanBoard() {
                   deleteTask={deleteTask}
                   updateTask={updateTask}
                   tasks={tasks.filter((task) => task.columnId === staticColumnBottom.id)}
-                  deleteColumn={(id: Id) => {
+                  deleteColumn={(_id: Id) => {
                     // No hacer nada ya que es estática
                   }}
                   />
