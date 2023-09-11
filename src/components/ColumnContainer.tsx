@@ -181,7 +181,7 @@ function ColumnContainer({
         }}
       >
         <PlusIcon />
-        Add task
+        Añadir Persona
       </button>
     </div>
   );

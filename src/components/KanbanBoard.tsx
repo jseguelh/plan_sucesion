@@ -35,18 +35,18 @@ const defaultTasks: Task[] = [
   {
     id: "1",
     columnId: "gop",
-    content: "Pedro Muñoz \n Ingeniero",
+    content: "Pedro Muñoz \n Ingeniero \n Universidad de Chile \n Último ascenso: 2019",
   },
   {
     id: "2",
     columnId: "gop",
     content:
-      "Juan Castillo /n Gerente",
+      "Juan Castillo \n Ingeniero Jefe \n Universidad de Aconcagua \n Último ascenso: 2023",
   },
   {
     id: "3",
     columnId: "sip",
-    content: "Sofia Vergara ",
+    content: "Sofia Vergara \n Ingeniero \n Último ascenso: -",
   },
   {
     id: "4",
@@ -147,7 +147,7 @@ function KanbanBoard() {
       "
           >
             <PlusIcon />
-            Add Column
+            Añadir organización
           </button>
         </div>
 
