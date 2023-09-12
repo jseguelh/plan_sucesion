@@ -15,21 +15,41 @@ import {
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
+import data from "./resumen.json";
+
+const defaultTasksBottom = data.map(item => ({
+  id: item.Sap.toString(),
+  columnId: "staticBottom",
+  content: item.Nombre,
+  data: item  // Almacena todo el objeto de datos aquí
+}));
 
 const defaultCols: Column[] = [
   
   {
     id: "gop",
-    title: "Gerencia de Operaciones",
+    title: "Gerente Operaciones",
 
   },
   {
-    id: "sip",
-    title: "Superintendencia de Procesos",
+    id: "gsso",
+    title: "Gerente de Seguridad y Salud Ocupacional",
   },
   {
-    id: "sim",
-    title: "Superintendencia de Molienda",
+    id: "ggp",
+    title: "Gerente Gestion de Personas",
+  },
+  {
+    id: "gad",
+    title: "Gerente de Administración",
+  },
+  {
+    id: "ghc",
+    title: "Gerente Hospital del Cobre",
+  },
+  {
+    id: "grmd",
+    title: "Gerente Recursos Mineros y Desarrollo",
   },
 ];
 
@@ -37,82 +57,83 @@ const defaultTasks: Task[] = [
   {
     id: "1",
     columnId: "gop",
-    content: "Pedro Muñoz \n Ingeniero \n Universidad de Chile \n Último ascenso: 2019",
+    content:
+      "RENÉ GALLEGUILLOS",
   },
   {
     id: "2",
-    columnId: "gop",
+    columnId: "gsso",
     content:
-      "Juan Castillo \n Ingeniero Jefe \n Universidad de Aconcagua \n Último ascenso: 2023",
+      "HIPOLITO HURTADO",
   },
   {
     id: "3",
-    columnId: "sip",
-    content: "Sofia Vergara \n Ingeniero \n Último ascenso: -",
+    columnId: "gad",
+    content: "RODRIGO VIDAL",
   },
   {
     id: "4",
-    columnId: "sip",
-    content: "Persona X",
+    columnId: "grmd",
+    content: "JUAN CRISTOBAL VIDELA",
   },
   {
-    id: "static",
-    columnId:"Gerente General",
-    content: "Persona X",
+    id: "5",
+    columnId: "ggp",
+    content: "MARCOS SANTANDER",
   },
+{
+  id: "666",
+  columnId: "ghc",
+  content: "MÓNICA JIMENEZ",
+},
+  
   
 ];
 
-const staticColumn: Column = {
-  id: "static",
-  title: "Gerencia General",
-};
 
 const staticColumnBottom: Column = {
   id: "staticBottom",
   title: "Profesionales",
 };
 
-const defaultTasksBottom: Task[] = [
+
+const staticColumn: Column = {
+  id: "static",
+  title: "Gerencia General",
+};
+
+const defaultTasksstatic: Task[] = [
   {
-    id: "staticTask1",
-    columnId: "staticBottom",
-    content: "Nombre por defecto 1",
-  },
-  {
-    id: "staticTask2",
-    columnId: "staticBottom",
-    content: "Nombre por defecto 2",
+    id: "staticTask5",
+    columnId: "static",
+    content: "CHRISTIAN CAVIEDES",
   },
 ];
 
+
 function KanbanBoard() {
 
-  
-  const savedColumns = localStorage.getItem('kanbanColumns');
-  const savedTasks = localStorage.getItem('kanbanTasks');
+   
+  //const savedColumns = localStorage.getItem('kanbanColumns');
+  //const savedTasks = localStorage.getItem('kanbanTasks');
 
-  const initialColumns = savedColumns ? JSON.parse(savedColumns) : defaultCols;
-  const initialTasks = savedTasks ? JSON.parse(savedTasks) : [defaultTasks, defaultTasksBottom]
+  //const initialColumns = savedColumns ? JSON.parse(savedColumns) : defaultCols;
 
-  const [columns, setColumns] = useState<Column[]>(initialColumns);
+  //const initialTasks = savedTasks ? JSON.parse(savedTasks) : defaultTasks.concat(defaultTasksBottom);
+
+  const [columns, setColumns] = useState<Column[]>(defaultCols);
 
   
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [tasks, setTasks] = useState<Task[]>(defaultTasks.concat(defaultTasksBottom,defaultTasksstatic));
 
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
 
   const [activeTask, setActiveTask] = useState<Task | null>(null);
 
-  // 2. Efecto secundario para guardar en localStorage
-  useEffect(() => {
-    localStorage.setItem('kanbanColumns', JSON.stringify(columns));
-    localStorage.setItem('kanbanTasks', JSON.stringify(tasks));
-  }, [columns, tasks]);
-
-
+ 
+  
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {

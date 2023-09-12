@@ -8,6 +8,7 @@ interface Props {
   task: Task;
   deleteTask: (id: Id) => void;
   updateTask: (id: Id, content: string) => void;
+  
 }
 
 function TaskCard({ task, deleteTask, updateTask }: Props) {
@@ -105,6 +106,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
         <button
           onClick={() => {
             deleteTask(task.id);
+            
           }}
           className="stroke-white absolute right-4 top-1/2 -translate-y-1/2 bg-columnBackgroundColor p-2 rounded opacity-60 hover:opacity-100"
         >
