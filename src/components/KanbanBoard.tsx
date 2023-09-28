@@ -167,7 +167,7 @@ function KanbanBoard() {
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
       >
-        <div className="flex gap-4 overflow-x-auto justify-center">
+        <div className="flex gap-4 overflow-x-auto">
           
           <SortableContext items={columnsId}>
             {columns.map((col) => (
