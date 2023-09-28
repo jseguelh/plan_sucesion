@@ -1,5 +1,5 @@
 import PlusIcon from "../icons/PlusIcon";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Column, Id, Task } from "../types";
 import ColumnContainer from "./ColumnContainer";
 import {
